@@ -22,7 +22,7 @@ function App() {
           <Route path='/signin' element={<SignInPage />} />
           <Route path='/forgot-password' element={<IsAuthorized><ForgotPasswordPage /></IsAuthorized>} />
           <Route path='/signup' element={<SignUpPage />} />
-          <Route path='/profile' element={<IsAuthorized><ProfilePage /></IsAuthorized>} />
+          <Route path='/profile' element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

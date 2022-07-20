@@ -5,10 +5,11 @@ import svg from '../../images/svg-signin.svg'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebase';
 import { AuthContext } from '../Context/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const SignIn = () => {
+    const navigate = useNavigate();
 
     
     const { setCurrentUser, setAuthCredentials } = useContext(AuthContext);
@@ -17,8 +18,14 @@ const SignIn = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
 
-    function handleLogin(e) {
+    const navigateToProfile = () => {
+        console.log('navigating');
+        navigate("/profile");
+    }
+
+    const handleLogin = (e) => {
         e.preventDefault()
+        console.log('submitting')
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
@@ -30,13 +37,13 @@ const SignIn = () => {
                 setCurrentUser(JSON.stringify(user))
                 localStorage.setItem('currentUser', JSON.stringify(user))
                 setAuthCredentials(user.email, user.uid);
-                <Navigate to='/profile' />
-                
+
+                navigateToProfile()
             })
             .catch((error) => {
+                console.log(error)
                 setError(true)
         });
-
        
     }
 
@@ -58,7 +65,9 @@ const SignIn = () => {
                   <Input type='email' placeholder='Enter your email address' ref={emailRef} />
                   <Label>Password</Label>
                   <Input placeholder='Enter your password' type='password' ref={passwordRef} />
+                  
                   <LoginButton type='submit'>Sign In</LoginButton>
+
                   {error && <ErrorMessage>Wrong email or password!</ErrorMessage>}
                   <ForgotPasswordDiv to="/forgot-password">
                       <ForgotPassword>Forgot Password?</ForgotPassword>

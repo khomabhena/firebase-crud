@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {FaBars} from 'react-icons/fa'
 import { Image, ImageWrap, MobileIcon, Name, Nav, NavbarContainer, NavItem, NavLinks, NavLogo, NavMenu, RightSide } from './ProfileNavElements'
 import { IconContext } from 'react-icons/lib'
 import logo from '../../images/logo-big.PNG'
 import profileIcon from '../../images/profile-icon.png'
+import { AuthContext } from '../Context/AuthContext'
 
 const ProfileNav = ({ selectedPage, togglePage }) => {
+
+    const {userEmail} = useContext(AuthContext);
 
   return (
     <>
@@ -50,7 +53,7 @@ const ProfileNav = ({ selectedPage, togglePage }) => {
                     <ImageWrap>
                         <Image src={profileIcon} />
                     </ImageWrap>
-                    <Name>Hi, Jansh</Name>
+                    <Name>Hi, {userEmail}</Name>
                 </RightSide>
             </NavbarContainer>
         </Nav>
