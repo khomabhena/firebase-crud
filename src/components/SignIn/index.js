@@ -1,16 +1,17 @@
 import React, { useContext, useRef, useState } from 'react'
-import { ForgotPassword, ForgotPasswordDiv, LogoWrap, Input, Label, LeftSide, LoginButton, LoginContainer, LoginForm, LoginWrap, Logo, RightSide, SignupButton, Svg, TextSignin, TextWelcome, ErrorMessage, TextArea } from './SignInElements'
+import { ForgotPassword, ForgotPasswordDiv, LogoWrap, Input, Label, LeftSide, LoginButton, LoginContainer, LoginForm, LoginWrap, Logo, RightSide, SignupButton, Svg, TextSignin, TextWelcome, ErrorMessage } from './SignInElements'
 import logo from '../../images/logo-big.PNG'
 import svg from '../../images/svg-signin.svg'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebase';
 import { AuthContext } from '../Context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 
 const SignIn = () => {
 
     
-    const {currentUser, setCurrentUser, setAuthCredentials, userEmail, userUid} = useContext(AuthContext);
+    const { setCurrentUser, setAuthCredentials } = useContext(AuthContext);
 
     const [error, setError] = useState(false);
     const emailRef = useRef();
@@ -29,6 +30,7 @@ const SignIn = () => {
                 setCurrentUser(JSON.stringify(user))
                 localStorage.setItem('currentUser', JSON.stringify(user))
                 setAuthCredentials(user.email, user.uid);
+                <Navigate to='/profile' />
                 
             })
             .catch((error) => {

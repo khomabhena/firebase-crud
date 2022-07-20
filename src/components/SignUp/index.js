@@ -6,24 +6,28 @@ import svg from '../../images/svg-signup.svg'
 import { auth, db } from '../../firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { AuthContext } from '../Context/AuthContext'
-import { doc, setDoc } from "firebase/firestore"; 
-import { async } from '@firebase/util'
+import { doc, setDoc } from "firebase/firestore"
+import { Navigate  } from 'react-router-dom'
 
 
 const SignUp = () => {
     
-    const {setAuthCredentials, userUid, userEmail} = useContext(AuthContext);
+    const { setAuthCredentials } = useContext(AuthContext);
 
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [uid, setUid] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
 
     const handleUploadData = async (uid, dataToUpload) => {
-        const res = await setDoc(doc(db, "users", uid), (dataToUpload));
+        try {
+            await setDoc(doc(db, "users", uid), (dataToUpload));
+            <Navigate to='/profile' />
+        } catch(error) {
+            console.log(error)
+        }
     }
 
     const handleSubmit = (e) => {
